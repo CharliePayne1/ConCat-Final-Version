@@ -1,24 +1,22 @@
 require_relative '../config/environment'
+require "tty-prompt"
+
+prompt = TTY::Prompt.new
 
 #YOU SHOULD BE ABLE TO SEE THIS
 
 #welcome message
-puts "DEVs = making logo "
-puts" "
 puts "Welcome to DEVS, the tool that matches you with a developer to bring your App to life!"
 puts " "
 
 #input new user name
 puts "To get started, tell us your name:"
 new_user_name = gets.chomp
+new_user = User.create(name: "#{new_user_name}")
 
-#  puts start_sentence(user_name) #What is this?
 #input project language
 puts " "
-puts "Thanks #{new_user_name}, now let us know which program you want your app built in:"
-new_app_language = gets.chomp
-
-#iertate over all the developers and find someone who specialises in that same language
+new_app_language = prompt.select("Thanks #{new_user_name}, now let us know which program you want your app built in:", %w(PPL es Oz Rlab HyperTalk Unicon Harbour FlooP TypeScript TEX Golo NWScript Hermes SystemVerilog Ratfor M# PL/SQL))
 developer = Developer.all.select {|developer| developer.language == new_app_language}[0]
 
 #show the user their match
@@ -29,80 +27,42 @@ puts " "
 puts "If you'd like to start working with #{developer.name}, tell us the name of your new app:"
 new_app_name = gets.chomp
 
-#create a new project instance 
-
-Project.create(name: "#{new_app_name}")
-puts "Okay great, we've created a new project for you and #{developer.name} to start working on #{new_app_name}."
-
-#display all avaiable categories
-#put the new project to the category
-puts "To be more organize, you can fall your app into a category. Your choice is:"
+puts "And the category this falls into:"
 app_category = gets.chomp
 
-# puts "Okay, we've found #{response.count]} developer(s) that match(es) your request." # ??????
-#
-# if response.count > 0
-#     reponse.count["results"].each do |developer|
-#         puts "~ #{developer.name}"
-#     end
-# else
-#     puts "So sorry, but there are no results for your request. Just start again!"
-# end
-# puts list_of_developers
-# puts "Put the name of develper you want to start work with:"
-# developer_name = gets.chomp
-# puts "Congratulation! You find you developer!"
-# puts "We would like to save it for you, so please put the name of your app:"
-# app_name = gets.chomp
-# puts "To be more organize, you can fall your app into a category:"
-# app_category = gets.chomp
-# puts pre_conslusion
-# app.create # ???????
-# puts conslusion
-# app.read # ??????
-# puts "Change the mind? no worries! You cam update or cancel your app any time!"
-# puts "Just type the name of the app you would like to update/cancel. We'll find it for you!"
-# app_name_choosen = gets.chomp
-# # TRUE - "Okay, we've cancelled your project, and let [DEVELOPERS NAME] know too." ?????
-# # FALSE - "I'm sorry, we can't find that project. Try calling [07939188944] for further assistance."
-# puts "What do you would like to do:"
-# # choose cancel update
-# # # if choose update
-# # updating
-# # if choose cancel cancel
-# app.update
-# puts "Okay, we have updated #{app_name_choosen}."
-# app.delete
-# puts "Okay, we have cancelled #{app_name_choosen}."
-# puts "Bye!!!"
-# # methods
-#   def start_sentence(user_name)
-#     "#{user_name}, let's bring together your app to life!!!"
-#   end
-#   def results(programmer_language, app_location)
-#     "We find for you the best developers at #{programmer_language} in #{app_location}:"
-#   end
-#   def response_count
-#   end
-#   def list_of_developers
-#   end
-#   def pre_conslusion
-#     "HURRA!!! ALL SET! NOW JUST START ENJOY TO PROCCES BUIDING #{app_name}!"
-#   end
-#   def conslusion
-#     puts "#{user_name} has created the app #{app_name} in category #{app_category} with
-#     #{developer_name} at #{rogrammer_language} in #{app_location}!"
-#   end
-#   def app.create
-#   end
-#   def app.read
-#   end
-#   def app.update
-#   end
-#   def app.cancel
-#   end
-# #  When back to app again: - Not sure if we have the tome for it
-# # enter your name
-# # If we have the name
-# # Hello, name. You have the saved the apps below
-# MESSAGE 05.05.2019
+#create a new project instance 
+
+Project.create(name: "#{new_app_name}", category: "#{app_category}", developer_id: developer.id, user_id: new_user.id)
+puts "Okay great, we've created a new project for you and #{developer.name} to start working on #{new_app_name}."
+puts "Drop them an email to say hi on #{developer.email} to get started."
+
+
+#update the name of your project
+update_answer = prompt.yes?('Would you like to change the name of your app?')
+if update_answer
+    original_app_name = prompt.ask("To help us find your app, what did you call it originally?")
+    original_app = Project.find_by(name: "#{original_app_name}")
+
+    updated_app_name = prompt.ask('Found it! Now, what would like to change the name to?')
+    original_app.update(name: "#{updated_app_name}")
+
+    puts "Great, we've changed your app to be called #{updated_app_name}."
+
+else
+    puts "Nice, we like #{new_app_name} too."
+
+end
+
+#delete the new project
+delete_project = prompt.yes?('Would you like to cancel this project?')
+if delete_project
+    app_name = prompt.ask("To help us find your app, what did you call your app?")
+    app = Project.find_by(name: "#{app_name}")
+    app.delete
+
+    puts "Okay, we've deleted this project for you."
+
+else
+    puts "Great, can't wait to see it when it's done."
+
+end

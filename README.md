@@ -1,13 +1,9 @@
 # DEV
 
 ## Short Description:
-Welcome to DEV, a tool to match you with the most talented developers across the world to build your apps. 
+Welcome to DEV, a tool to match you with the most talented developers across the world to build your apps. We believe that you should work with the best developer to build your app, not just the one that lives closest to you.
 
-We believe that you should work with the best developer to build your app, not just the one that lives closest to you.
-
-That's why we developed 'DEV', to pair the best developers with the best ideas for new apps.
-
-Simply tell us which langauge you want to build your app in and we'll take care of the rest. 
+That's why we developed 'DEV', to pair the best developers with the best ideas for new apps. Simply tell us which langauge you want to build your app in and we'll take care of the rest. 
 
 ## Install Instructions
 1. run "bundle" in your terminal to install the gems you will need for this programme
