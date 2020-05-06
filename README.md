@@ -1,12 +1,12 @@
-# DEV
+# ConCat
 
 ## Short Description:
-Welcome to DEV, a tool to match you with the most talented developers across the world to build your apps. We believe that you should work with the best developer to build your app, not just the one that lives closest to you.
+Welcome to Concat, a tool to match you with the most talented developers across the world. We believe that you should work with the best developers to build your app, not the one that lives closest to you.
 
-That's why we developed 'DEV', to pair the best developers with the best ideas for new apps. Simply tell us which langauge you want to build your app in and we'll take care of the rest. 
+That's why we developed ConCat, to pair the best developers in the world with the best ideas for new apps. Simply tell us which langauge you want to build your app in and we'll take care of the rest. 
 
 ## Install Instructions
-1. run "bundle" in your terminal to install the gems you will need for this programme
+1. run "bundle" in your terminal to install all the gems you will need for this programme
 
 ## License 
 
