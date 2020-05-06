@@ -14,6 +14,9 @@ class CLI < ActiveRecord::Base
     end
     
     def self.greet
+        a = Artii::Base.new :font => 'bulbhead'
+        puts a.asciify('ConCat').blue
+        puts " "
         puts "Welcome to ConCat, the tool that matches you with a developer to bring your App to life!".colorize(:blue)
         puts " "
     end
