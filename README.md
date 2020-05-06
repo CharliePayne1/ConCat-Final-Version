@@ -1,6 +1,6 @@
 # ConCat
 
-## Short Description:
+## Description
 Welcome to Concat, a tool to match you with the most talented developers across the world. We believe that you should work with the best developers to build your app, not the one that lives closest to you.
 
 That's why we developed ConCat, to pair the best developers in the world with the best ideas for new apps. Simply tell us which langauge you want to build your app in and we'll take care of the rest. 
