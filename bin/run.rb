@@ -13,19 +13,20 @@ CLI.greet
 #input new user name (CREATE)
 new_user_name = prompt.ask("To get started, tell us your name:".colorize(:yellow))
 new_user = User.find_or_create_by(name: "#{new_user_name}")
+puts " "
 
 #look at current projects (READ)
-active_projects = prompt.yes?("Would you like to look at your active projects?".colorize(:yellow))
+active_projects = prompt.yes?("Hey #{new_user_name}! Would you like to look at your active projects?".colorize(:yellow))
 CLI.loading_bar
     if active_projects
         project_names = new_user.projects.map {|project| project.name}
             if project_names.length == 0
             puts "You don't have any active projects, let's change that!.".colorize(:red)
             else
-            puts "Here are all the names of your active projects: #{project_names.to_s}."
+            puts "Here are all the names of your active projects: #{project_names.to_s}.".colorize(:green)
             end
     else
-    puts "That means you must have a new App idea!"
+    puts "That means you must have a new App idea!".colorize(:yellow)
 end
 
 #input project language (READ)
@@ -40,7 +41,7 @@ puts " "
 
 #get the name of the new app & category to create a new project instance
 new_app_name = prompt.ask("If you'd like to start working with #{developer.name}, tell us the name of your new app:".colorize(:yellow))
-app_category = prompt.select("And the category this falls into:", %w(Banking E-Commerce Gaming Healthcare Pharmaceuticals Travel))
+app_category = prompt.select("And the category this falls into:", %w(Banking Communicaton E-Commerce Fitness Gaming Healthcare Pharmaceuticals TOP-SECRET Travel))
 CLI.loading_bar
 
 #create a new project instance (CREATE)
@@ -48,6 +49,7 @@ Project.create(name: "#{new_app_name}", category: "#{app_category}", developer_i
 puts "Okay great, we've created a new project for you and #{developer.name} to start working on #{new_app_name} together.".colorize(:green)
 puts " "
 puts "Drop them an email to say hi and get started on #{developer.email}.".colorize(:green)
+puts " "
 
 
 #update the name of your project (UPDATE)
@@ -64,7 +66,7 @@ update_answer = prompt.yes?('Would you like to change the name of your app?'.col
 
         else
             CLI.loading_bar
-            puts "Nice, we likedy #{new_app_name} too.".colorize(:green)
+            puts "Nice, we liked #{new_app_name} too.".colorize(:green)
         end
 
 #delete the new project (DELETE)
