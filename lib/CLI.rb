@@ -10,7 +10,7 @@ class CLI < ActiveRecord::Base
     end
 
     def self.goodbye
-        puts "Thanks for using ConCat, see you soon!".colorize(:blue)
+        puts "Thanks for using ConCat, hopefully see you soon!".colorize(:blue)
     end
     
 end
