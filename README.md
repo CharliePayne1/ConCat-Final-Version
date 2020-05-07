@@ -10,6 +10,8 @@ Once you have an active project, you can log in to update the details of your ap
 ## Install Instructions
 1. run "bundle" in your terminal to install all the gems you will need for this programme
 
+how to install.mov
+
 ## License 
 
 This program is free software; you can redistribute it and/or modify
