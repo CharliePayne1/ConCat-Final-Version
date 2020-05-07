@@ -11,15 +11,22 @@ CLI.loading_bar
 CLI.greet
 
 #input new user name (CREATE)
-new_user_name = prompt.ask("To get started, tell us your name:".colorize(:yellow))
-new_user = User.find_or_create_by(name: "#{new_user_name}")
+name = prompt.ask("To get started, tell us your name:".colorize(:yellow))
+# new_user = User.find_or_create_by(name: "#{new_user_name}")
 puts " "
 
-#look at current projects (READ)
-active_projects = prompt.yes?("Hey #{new_user_name}! Would you like to look at your active projects?".colorize(:yellow))
-CLI.loading_bar
+#new user or existing user
+user = User.all.find {|user| user.name == name}
+if user == nil 
+    User.create(name: "new_user_name")
+    puts "Looks, like you're new to ConCat #{name}, so we've made you a new profile."
+else
+    puts "Nice to see you again #{name}!"
+    puts " "
+    active_projects = prompt.yes?("Hey #{name}! Would you like to look at your active projects?".colorize(:yellow))
+    CLI.loading_bar
     if active_projects
-        project_names = new_user.projects.map {|project| project.name}
+        project_names = user.projects.map {|project| project.name}
             if project_names.length == 0
             puts "You don't have any active projects, let's change that!.".colorize(:red)
             else
@@ -28,6 +35,7 @@ CLI.loading_bar
             end
     else
     puts "That means you must have a new App idea!".colorize(:yellow)
+    end
 end
 
 #input project language (READ)
@@ -35,7 +43,7 @@ puts " "
 new_project = prompt.yes?("Would you like to create a new app?".colorize(:yellow))
 if new_project
     CLI.loading_bar 
-    new_app_language = prompt.select("Thanks for choosing ConCat to create your new app #{new_user_name}, now let us know which program you want your new app built in:", %w(PPL es Oz Rlab HyperTalk Unicon Harbour FlooP TypeScript TEX Golo NWScript Hermes SystemVerilog Ratfor M# PL/SQL))
+    new_app_language = prompt.select("Thanks for choosing ConCat to create your new app #{name}, now let us know which program you want your new app built in:", %w(PPL es Oz Rlab HyperTalk Unicon Harbour FlooP TypeScript TEX Golo NWScript Hermes SystemVerilog Ratfor M# PL/SQL))
     developer = Developer.all.find {|developer| developer.language == new_app_language}
     CLI.loading_bar
 
@@ -49,7 +57,7 @@ if new_project
     CLI.loading_bar
 
 #create a new project instance (CREATE)
-    Project.create(name: "#{new_app_name}", category: "#{app_category}", developer_id: developer.id, user_id: new_user.id)
+    Project.create(name: "#{new_app_name}", category: "#{app_category}", developer_id: developer.id, user_id: user.id)
     puts "Okay great, we've created a new project for you and #{developer.name} to start working on #{new_app_name} together.".colorize(:green)
     puts " "
     puts "Drop them an email to say hi and get started on #{developer.email}.".colorize(:green)
