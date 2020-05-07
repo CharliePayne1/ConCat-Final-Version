@@ -23,8 +23,10 @@ class CLI < ActiveRecord::Base
 
     def self.goodbye
         puts " "
-        puts " "
         puts "Thanks for using ConCat, hopefully see you soon!".colorize(:blue)
+        puts " "
+        a = Artii::Base.new :font => 'bulbhead'
+        puts a.asciify('ConCat').blue
     end
     
 end

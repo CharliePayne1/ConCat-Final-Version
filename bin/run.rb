@@ -18,8 +18,8 @@ puts " "
 #new user or existing user
 user = User.all.find {|user| user.name == name}
 if user == nil 
-    User.create(name: "new_user_name")
-    puts "Looks, like you're new to ConCat #{name}, so we've made you a new profile."
+    user = User.create(name: "#{name}")
+    puts "Looks, like you're new to ConCat #{name}, so we've set you up with a new profile."
 else
     puts "Nice to see you again #{name}!"
     puts " "
@@ -103,7 +103,6 @@ if delete_project
     puts "Okay, we've deleted this project for you.".colorize(:green)
 
 else
-    CLI.loading_bar
     puts " "
     puts "Great, can't wait to see your work!.".colorize(:green)
 
